@@ -348,6 +348,33 @@ function setupScrollAnimations() {
     });
 }
 
+// ── AI DESCRIPTION GENERATOR ─────────────
+window.generateDescription = async function() {
+    const title = document.getElementById('book-title').value.trim();
+    const classLabel = document.getElementById('book-class-label').value.trim();
+    if (!classLabel) { showAdminToast('আগে শ্রেণি লিখুন'); return; }
+    const btn = document.getElementById('ai-desc-btn');
+    const loading = document.getElementById('ai-desc-loading');
+    btn.disabled = true;
+    loading.style.display = 'block';
+    try {
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 150,
+                messages: [{ role: 'user', content: `Write a short 1-2 sentence book description in Bengali for a vocabulary book called "${title || 'Golden Student Voc@bulary'}" for ${classLabel} students in Bangladesh. It covers word meanings, synonyms, antonyms, and parts of speech from the national board textbook. Only return the description, nothing else.` }]
+            })
+        });
+        const data = await response.json();
+        const text = data.content?.[0]?.text || '';
+        if (text) { document.getElementById('book-desc').value = text; showAdminToast('✨ AI লিখেছে!'); }
+    } catch(e) { showAdminToast('AI ব্যর্থ, নিজে লিখুন'); }
+    btn.disabled = false;
+    loading.style.display = 'none';
+};
+
 // ── TOAST ─────────────────────────────────
 function showToast(msg) {
     let t = document.querySelector('.toast');

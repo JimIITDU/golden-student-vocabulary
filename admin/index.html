@@ -230,12 +230,8 @@
                         <input type="text" id="book-title" placeholder="Golden Student Voc@bulary">
                     </div>
                     <div class="form-group">
-                        <label>Class Label *</label>
+                        <label>শ্রেণি * <small style="font-weight:400;text-transform:none">(যেমন: Class 3)</small></label>
                         <input type="text" id="book-class-label" placeholder="Class 3">
-                    </div>
-                    <div class="form-group">
-                        <label>বাংলায় শ্রেণি *</label>
-                        <input type="text" id="book-class-bn" placeholder="তৃতীয় শ্রেণি">
                     </div>
                     <div class="form-group">
                         <label>মূল্য (৳) *</label>
@@ -250,20 +246,24 @@
                         <input type="number" id="book-order" placeholder="1">
                     </div>
                     <div class="form-group full">
-                        <label>বিবরণ</label>
-                        <textarea id="book-desc" rows="2" placeholder="বোর্ড বইয়ের শব্দের অর্থ, Synonyms, Antonyms, Parts of Speech"></textarea>
+                        <div class="desc-label-row">
+                            <label>বিবরণ</label>
+                            <button type="button" class="btn-ai-desc" id="ai-desc-btn" onclick="generateDescription()">✨ AI দিয়ে লিখুন</button>
+                        </div>
+                        <textarea id="book-desc" rows="3" placeholder="বোর্ড বইয়ের শব্দের অর্থ, Synonyms, Antonyms, Parts of Speech"></textarea>
+                        <div id="ai-desc-loading" style="display:none;font-size:0.85rem;color:#EC4899;margin-top:0.4rem;">✨ AI লিখছে...</div>
                     </div>
                     <div class="form-group full">
-                        <label>বইয়ের কভার ছবি</label>
-                        <div class="upload-area" id="cover-upload-area" onclick="document.getElementById('cover-file').click()">
-                            <div id="cover-preview-wrap">
-                                <span class="upload-icon">🖼️</span>
-                                <p>ছবি আপলোড করতে ক্লিক করুন</p>
-                                <small>PNG, JPG — সর্বোচ্চ 5MB</small>
+                        <label>PDF Preview ফাইল (একটু পড়ে দেখুন)</label>
+                        <div class="upload-area" id="pdf-upload-area" onclick="document.getElementById('pdf-file').click()">
+                            <div id="pdf-preview-wrap">
+                                <span class="upload-icon">📄</span>
+                                <p>PDF আপলোড করতে ক্লিক করুন</p>
+                                <small>PDF — সর্বোচ্চ 20MB</small>
                             </div>
                         </div>
-                        <input type="file" id="cover-file" accept="image/*" style="display:none" onchange="previewCover(this)">
-                        <input type="hidden" id="book-cover-url">
+                        <input type="file" id="pdf-file" accept=".pdf" style="display:none" onchange="previewPdf(this)">
+                        <input type="hidden" id="book-pdf-url">
                     </div>
                     <div class="form-group full">
                         <label>PDF Preview ফাইল (একটু পড়ে দেখুন)</label>

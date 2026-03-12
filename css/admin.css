@@ -619,6 +619,17 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); }
     background: var(--bg);
 }
 
+.desc-label-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem; }
+.desc-label-row label { margin-bottom:0; }
+.btn-ai-desc { background:linear-gradient(135deg,#EC4899,#8B5CF6); color:white; border:none; padding:0.35rem 0.9rem; border-radius:20px; font-size:0.82rem; font-weight:700; cursor:pointer; font-family:var(--font); }
+.btn-ai-desc:hover { opacity:0.85; }
+.btn-ai-desc:disabled { opacity:0.5; cursor:not-allowed; }
+.pdf-link-box { display:flex; align-items:center; gap:0.7rem; border:1.5px solid var(--border); border-radius:10px; padding:0.6rem 0.9rem; background:var(--bg); }
+.pdf-link-icon { font-size:1.4rem; }
+.pdf-link-box input { border:none; background:none; font-family:var(--font); font-size:0.9rem; color:var(--text); width:100%; padding:0; }
+.pdf-link-box input:focus { outline:none; }
+.field-hint { display:block; font-size:0.8rem; color:var(--text-mid); margin-top:0.4rem; line-height:1.5; }
+
 /* ── TOAST ── */
 .admin-toast {
     position: fixed;

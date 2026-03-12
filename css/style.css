@@ -552,9 +552,11 @@ a { text-decoration: none; color: inherit; }
     margin-bottom: 0.2rem;
 }
 .contact-card span {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: var(--text-dark);
+    word-break: break-all;
+    overflow-wrap: anywhere;
 }
 
 /* ══════════════════════════════
@@ -968,4 +970,45 @@ a { text-decoration: none; color: inherit; }
     .hero-actions { flex-direction: column; align-items: flex-start; }
     .payment-options { grid-template-columns: 1fr; }
     .books-grid { grid-template-columns: 1fr; }
+}
+
+.navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1.5px solid var(--color-primary-light);
+    box-shadow: var(--shadow-sm);
+}
+.navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 65px;
+}
+.navbar-logo img {
+    height: 46px;
+    width: auto;
+    object-fit: contain;
+}
+.navbar-links {
+    display: flex;
+    gap: 2rem;
+}
+.navbar-links a {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-mid);
+    text-decoration: none;
+    transition: var(--transition);
+}
+.navbar-links a:hover { color: var(--color-primary-dark); }
+.hero { padding-top: 65px; }
+.hero-logo { margin-bottom: 1.5rem; }
+.hero-logo img {
+    height: 110px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.12));
 }
