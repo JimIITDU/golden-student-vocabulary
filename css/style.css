@@ -517,7 +517,7 @@ a { text-decoration: none; color: inherit; }
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.5rem;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -555,8 +555,12 @@ a { text-decoration: none; color: inherit; }
     font-size: 0.95rem;
     font-weight: 600;
     color: var(--text-dark);
-    word-break: break-all;
-    overflow-wrap: anywhere;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#contact-email {
+    width: 100%;
 }
 
 /* ══════════════════════════════

@@ -5,308 +5,301 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel — Golden Student Voc@bulary</title>
     <link rel="stylesheet" href="../css/admin.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="admin-body">
+<body>
 
-    <!-- ═══ LOGIN SCREEN ═══ -->
-    <div id="login-screen" class="login-screen">
-        <div class="login-card">
-            <div class="login-logo">📚</div>
-            <h1 class="login-title">Admin Panel</h1>
-            <p class="login-sub">Golden Student Voc@bulary</p>
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" id="admin-email" placeholder="admin@example.com" autocomplete="username">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="admin-password" placeholder="••••••••" autocomplete="current-password">
-            </div>
-            <div id="login-error" class="login-error" style="display:none"></div>
-            <button class="btn-login" id="login-btn" onclick="doLogin()">লগইন করুন</button>
+<!-- ═══ LOGIN ═══ -->
+<div id="login-screen" class="login-screen">
+    <div class="login-card">
+        <div class="login-logo">📚</div>
+        <h1 class="login-title">Admin Panel</h1>
+        <p class="login-sub">Golden Student Voc@bulary</p>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="admin-email" placeholder="admin@example.com" autocomplete="username">
         </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="admin-password" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <div id="login-error" class="login-error" style="display:none"></div>
+        <button class="btn-login" id="login-btn" onclick="doLogin()">লগইন করুন</button>
     </div>
+</div>
 
-    <!-- ═══ MAIN ADMIN APP ═══ -->
-    <div id="admin-app" class="admin-app" style="display:none">
+<!-- ═══ ADMIN APP ═══ -->
+<div id="admin-app" class="admin-app" style="display:none">
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-logo">
-                <span>📚</span>
-                <div>
-                    <strong>GSV Admin</strong>
-                    <small id="admin-email-display"></small>
-                </div>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="#" class="nav-item active" data-tab="orders">
-                    <span class="nav-icon">📋</span> অর্ডার ম্যানেজমেন্ট
-                </a>
-                <a href="#" class="nav-item" data-tab="books">
-                    <span class="nav-icon">📚</span> বই ম্যানেজমেন্ট
-                </a>
-                <a href="#" class="nav-item" data-tab="settings">
-                    <span class="nav-icon">⚙️</span> সাইট সেটিংস
-                </a>
-            </nav>
-            <div class="sidebar-footer">
-                <a href="../index.html" class="nav-item" target="_blank">
-                    <span class="nav-icon">🌐</span> সাইট দেখুন
-                </a>
-                <button class="btn-logout" onclick="doLogout()">🚪 লগআউট</button>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="admin-main">
-
-            <!-- ── ORDERS TAB ── -->
-            <div id="tab-orders" class="tab-content active">
-                <div class="tab-header">
-                    <h2>📋 অর্ডার ম্যানেজমেন্ট</h2>
-                    <div class="filter-row">
-                        <select id="order-filter" onchange="filterOrders()">
-                            <option value="all">সব অর্ডার</option>
-                            <option value="pending">⏳ পেন্ডিং</option>
-                            <option value="confirmed">✅ কনফার্মড</option>
-                            <option value="shipped">🚚 শিপড</option>
-                            <option value="completed">🎉 সম্পন্ন</option>
-                            <option value="cancelled">❌ বাতিল</option>
-                            <option value="rejected">🚫 প্রত্যাখ্যাত</option>
-                        </select>
-                        <button class="btn-refresh" onclick="loadOrders()">🔄 রিফ্রেশ</button>
-                    </div>
-                </div>
-                <div id="orders-loading" class="loading-state">
-                    <div class="spinner"></div><p>লোড হচ্ছে...</p>
-                </div>
-                <div id="orders-list" class="orders-list"></div>
-            </div>
-
-            <!-- ── BOOKS TAB ── -->
-            <div id="tab-books" class="tab-content">
-                <div class="tab-header">
-                    <h2>📚 বই ম্যানেজমেন্ট</h2>
-                    <button class="btn-primary" onclick="openBookModal()">+ নতুন বই যোগ করুন</button>
-                </div>
-                <div id="books-loading" class="loading-state">
-                    <div class="spinner"></div><p>লোড হচ্ছে...</p>
-                </div>
-                <div id="admin-books-grid" class="admin-books-grid"></div>
-            </div>
-
-            <!-- ── SETTINGS TAB ── -->
-            <div id="tab-settings" class="tab-content">
-                <div class="tab-header">
-                    <h2>⚙️ সাইট সেটিংস</h2>
-                </div>
-                <div class="settings-grid">
-
-                    <!-- Contact Info -->
-                    <div class="settings-card">
-                        <h3>📞 যোগাযোগ তথ্য</h3>
-                        <div class="form-group">
-                            <label>WhatsApp নম্বর (অর্ডার পাবেন)</label>
-                            <input type="text" id="s-whatsapp" placeholder="8801XXXXXXXXX">
-                        </div>
-                        <div class="form-group">
-                            <label>ফোন নম্বর (দেখানো হবে)</label>
-                            <input type="text" id="s-phone" placeholder="+880 1XXX-XXXXXX">
-                        </div>
-                        <div class="form-group">
-                            <label>bKash/Nagad/Rocket নম্বর</label>
-                            <input type="text" id="s-bkash" placeholder="01XXXXXXXXX">
-                        </div>
-                        <div class="form-group">
-                            <label>ইমেইল</label>
-                            <input type="email" id="s-email" placeholder="email@example.com">
-                        </div>
-                    </div>
-
-                    <!-- Colors -->
-                    <div class="settings-card">
-                        <h3>🎨 রঙ পরিবর্তন</h3>
-                        <div class="color-grid">
-                            <div class="form-group">
-                                <label>Primary (Pink)</label>
-                                <div class="color-row">
-                                    <input type="color" id="s-color-primary" value="#F9A8D4">
-                                    <input type="text" id="s-color-primary-text" value="#F9A8D4">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Primary Dark</label>
-                                <div class="color-row">
-                                    <input type="color" id="s-color-primary-dark" value="#EC4899">
-                                    <input type="text" id="s-color-primary-dark-text" value="#EC4899">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Secondary (Green)</label>
-                                <div class="color-row">
-                                    <input type="color" id="s-color-secondary" value="#86EFAC">
-                                    <input type="text" id="s-color-secondary-text" value="#86EFAC">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Accent (Yellow)</label>
-                                <div class="color-row">
-                                    <input type="color" id="s-color-accent" value="#FDE047">
-                                    <input type="text" id="s-color-accent-text" value="#FDE047">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="color-preview" id="color-preview">
-                            <button style="background:#EC4899;color:white;padding:0.5rem 1rem;border:none;border-radius:8px;">Preview Button</button>
-                            <span style="background:#FDE047;padding:0.3rem 1rem;border-radius:20px;font-weight:700;">Badge</span>
-                            <span style="background:#86EFAC;padding:0.3rem 1rem;border-radius:20px;">Green</span>
-                        </div>
-                    </div>
-
-                    <!-- Text Content -->
-                    <div class="settings-card full-width">
-                        <h3>✏️ সাইটের টেক্সট পরিবর্তন</h3>
-                        <div class="text-fields-grid">
-                            <div class="form-group">
-                                <label>Hero Badge</label>
-                                <input type="text" id="s-hero-badge" placeholder="📚 শিক্ষার্থীদের সেরা সঙ্গী">
-                            </div>
-                            <div class="form-group">
-                                <label>Main Title</label>
-                                <input type="text" id="s-title-main" placeholder="Golden">
-                            </div>
-                            <div class="form-group">
-                                <label>Tagline</label>
-                                <input type="text" id="s-tagline" placeholder="Your effort, our support">
-                            </div>
-                            <div class="form-group">
-                                <label>Hero Description</label>
-                                <input type="text" id="s-hero-desc" placeholder="A dictionary of your textbook">
-                            </div>
-                            <div class="form-group">
-                                <label>About Section Text</label>
-                                <textarea id="s-about-text" rows="3"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Author Name</label>
-                                <input type="text" id="s-author-name" placeholder="Enamuzzaman Adil">
-                            </div>
-                            <div class="form-group">
-                                <label>Author Credentials</label>
-                                <input type="text" id="s-author-creds" placeholder="BBA, MBA — University of Dhaka">
-                            </div>
-                            <div class="form-group">
-                                <label>Author Experience</label>
-                                <input type="text" id="s-author-exp" placeholder="১২ বছরের শিক্ষকতার অভিজ্ঞতা">
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="settings-actions">
-                    <button class="btn-primary" onclick="saveSettings()">💾 সেটিংস সেভ করুন</button>
-                    <span id="settings-saved" class="save-msg" style="display:none">✅ সেভ হয়েছে!</span>
-                </div>
-            </div>
-
-        </main>
-    </div>
-
-    <!-- ═══ BOOK MODAL ═══ -->
-    <div class="modal-backdrop" id="book-modal">
-        <div class="modal-box">
-            <div class="modal-head">
-                <h3 id="book-modal-title">নতুন বই যোগ করুন</h3>
-                <button class="modal-close-btn" onclick="closeBookModal()">✕</button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="edit-book-id">
-                <div class="modal-grid">
-                    <div class="form-group">
-                        <label>বইয়ের নাম *</label>
-                        <input type="text" id="book-title" placeholder="Golden Student Voc@bulary">
-                    </div>
-                    <div class="form-group">
-                        <label>শ্রেণি * <small style="font-weight:400;text-transform:none">(যেমন: Class 3)</small></label>
-                        <input type="text" id="book-class-label" placeholder="Class 3">
-                    </div>
-                    <div class="form-group">
-                        <label>মূল্য (৳) *</label>
-                        <input type="number" id="book-price" placeholder="500">
-                    </div>
-                    <div class="form-group">
-                        <label>ওজন (গ্রাম)</label>
-                        <input type="number" id="book-weight" placeholder="200">
-                    </div>
-                    <div class="form-group">
-                        <label>সাজানোর ক্রম</label>
-                        <input type="number" id="book-order" placeholder="1">
-                    </div>
-                    <div class="form-group full">
-                        <div class="desc-label-row">
-                            <label>বিবরণ</label>
-                            <button type="button" class="btn-ai-desc" id="ai-desc-btn" onclick="generateDescription()">✨ AI দিয়ে লিখুন</button>
-                        </div>
-                        <textarea id="book-desc" rows="3" placeholder="বোর্ড বইয়ের শব্দের অর্থ, Synonyms, Antonyms, Parts of Speech"></textarea>
-                        <div id="ai-desc-loading" style="display:none;font-size:0.85rem;color:#EC4899;margin-top:0.4rem;">✨ AI লিখছে...</div>
-                    </div>
-                    <div class="form-group full">
-                        <label>PDF Preview ফাইল (একটু পড়ে দেখুন)</label>
-                        <div class="upload-area" id="pdf-upload-area" onclick="document.getElementById('pdf-file').click()">
-                            <div id="pdf-preview-wrap">
-                                <span class="upload-icon">📄</span>
-                                <p>PDF আপলোড করতে ক্লিক করুন</p>
-                                <small>PDF — সর্বোচ্চ 20MB</small>
-                            </div>
-                        </div>
-                        <input type="file" id="pdf-file" accept=".pdf" style="display:none" onchange="previewPdf(this)">
-                        <input type="hidden" id="book-pdf-url">
-                    </div>
-                    <div class="form-group full">
-                        <label>PDF Preview ফাইল (একটু পড়ে দেখুন)</label>
-                        <div class="upload-area" id="pdf-upload-area" onclick="document.getElementById('pdf-file').click()">
-                            <div id="pdf-preview-wrap">
-                                <span class="upload-icon">📄</span>
-                                <p>PDF আপলোড করতে ক্লিক করুন</p>
-                                <small>PDF — সর্বোচ্চ 20MB</small>
-                            </div>
-                        </div>
-                        <input type="file" id="pdf-file" accept=".pdf" style="display:none" onchange="previewPdf(this)">
-                        <input type="hidden" id="book-pdf-url">
-                    </div>
-                </div>
-                <div id="upload-progress" class="upload-progress" style="display:none">
-                    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-                    <span id="progress-text">আপলোড হচ্ছে...</span>
-                </div>
-            </div>
-            <div class="modal-foot">
-                <button class="btn-secondary" onclick="closeBookModal()">বাতিল</button>
-                <button class="btn-primary" id="save-book-btn" onclick="saveBook()">💾 সেভ করুন</button>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <span>📚</span>
+            <div>
+                <strong>GSV Admin</strong>
+                <small id="admin-email-display"></small>
             </div>
         </div>
-    </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-tab="orders">
+                <span class="nav-icon">📋</span> অর্ডার
+            </a>
+            <a href="#" class="nav-item" data-tab="books">
+                <span class="nav-icon">📚</span> বই ম্যানেজমেন্ট
+            </a>
+            <a href="#" class="nav-item" data-tab="settings">
+                <span class="nav-icon">⚙️</span> সাইট সেটিংস
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../index.html" class="nav-item" target="_blank">
+                <span class="nav-icon">🌐</span> সাইট দেখুন
+            </a>
+            <button class="btn-logout" onclick="doLogout()">🚪 লগআউট</button>
+        </div>
+    </aside>
 
-    <!-- ═══ ORDER DETAIL MODAL ═══ -->
-    <div class="modal-backdrop" id="order-modal">
-        <div class="modal-box">
-            <div class="modal-head">
-                <h3>অর্ডার বিবরণ</h3>
-                <button class="modal-close-btn" onclick="closeOrderModal()">✕</button>
+    <!-- Main -->
+    <main class="admin-main">
+
+        <!-- ── ORDERS ── -->
+        <div id="tab-orders" class="tab-content active">
+            <div class="tab-header">
+                <h2>📋 অর্ডার ম্যানেজমেন্ট</h2>
+                <div class="filter-row">
+                    <select id="order-filter" onchange="filterOrders()">
+                        <option value="all">সব অর্ডার</option>
+                        <option value="pending">⏳ পেন্ডিং</option>
+                        <option value="confirmed">✅ কনফার্মড</option>
+                        <option value="shipped">🚚 শিপড</option>
+                        <option value="completed">🎉 সম্পন্ন</option>
+                        <option value="cancelled">❌ বাতিল</option>
+                        <option value="rejected">🚫 প্রত্যাখ্যাত</option>
+                    </select>
+                    <button class="btn-refresh" onclick="loadOrders()">🔄 রিফ্রেশ</button>
+                </div>
             </div>
-            <div class="modal-body" id="order-detail-body"></div>
-            <div class="modal-foot">
-                <button class="btn-secondary" onclick="closeOrderModal()">বন্ধ করুন</button>
+            <div id="orders-loading" class="loading-state">
+                <div class="spinner"></div><p>লোড হচ্ছে...</p>
+            </div>
+            <div id="orders-list" class="orders-list"></div>
+        </div>
+
+        <!-- ── BOOKS ── -->
+        <div id="tab-books" class="tab-content">
+            <div class="tab-header">
+                <h2>📚 বই ম্যানেজমেন্ট</h2>
+                <button class="btn-primary" onclick="openBookModal()">+ নতুন বই যোগ করুন</button>
+            </div>
+            <div id="books-loading" class="loading-state">
+                <div class="spinner"></div><p>লোড হচ্ছে...</p>
+            </div>
+            <div id="admin-books-grid" class="admin-books-grid"></div>
+        </div>
+
+        <!-- ── SETTINGS ── -->
+        <div id="tab-settings" class="tab-content">
+            <div class="tab-header">
+                <h2>⚙️ সাইট সেটিংস</h2>
+            </div>
+            <div class="settings-grid">
+
+                <!-- Contact -->
+                <div class="settings-card">
+                    <h3>📞 যোগাযোগ তথ্য</h3>
+                    <div class="form-group">
+                        <label>WhatsApp / ফোন নম্বর</label>
+                        <input type="text" id="s-whatsapp" placeholder="8801521432606">
+                        <small class="field-hint">অর্ডার এই নম্বরে আসবে। দেশ কোড সহ লিখুন।</small>
+                    </div>
+                    <div class="form-group">
+                        <label>সাইটে দেখানোর ফোন নম্বর</label>
+                        <input type="text" id="s-phone" placeholder="+880 1521-432606">
+                    </div>
+                    <div class="form-group">
+                        <label>ইমেইল</label>
+                        <input type="email" id="s-email" placeholder="adilenamuzzaman12@gmail.com">
+                    </div>
+                </div>
+
+                <!-- Colors -->
+                <div class="settings-card">
+                    <h3>🎨 রঙ পরিবর্তন</h3>
+                    <div class="color-grid">
+                        <div class="form-group">
+                            <label>Pink (হালকা)</label>
+                            <div class="color-row">
+                                <input type="color" id="s-color-primary" value="#F9A8D4">
+                                <input type="text"  id="s-color-primary-text" value="#F9A8D4">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Pink (গাঢ়)</label>
+                            <div class="color-row">
+                                <input type="color" id="s-color-primary-dark" value="#EC4899">
+                                <input type="text"  id="s-color-primary-dark-text" value="#EC4899">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Green</label>
+                            <div class="color-row">
+                                <input type="color" id="s-color-secondary" value="#22C55E">
+                                <input type="text"  id="s-color-secondary-text" value="#22C55E">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Yellow</label>
+                            <div class="color-row">
+                                <input type="color" id="s-color-accent" value="#EAB308">
+                                <input type="text"  id="s-color-accent-text" value="#EAB308">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Content -->
+                <div class="settings-card full-width">
+                    <h3>✏️ সাইটের টেক্সট পরিবর্তন</h3>
+                    <div class="text-fields-grid">
+                        <div class="form-group">
+                            <label>Hero Badge</label>
+                            <input type="text" id="s-hero-badge" placeholder="📚 শিক্ষার্থীদের সেরা সঙ্গী">
+                        </div>
+                        <div class="form-group">
+                            <label>সাইটের নাম (Title)</label>
+                            <input type="text" id="s-title-main" placeholder="Golden">
+                        </div>
+                        <div class="form-group">
+                            <label>Tagline</label>
+                            <input type="text" id="s-tagline" placeholder="Your effort, our support">
+                        </div>
+                        <div class="form-group">
+                            <label>Hero বিবরণ</label>
+                            <input type="text" id="s-hero-desc" placeholder="A dictionary of your textbook">
+                        </div>
+                        <div class="form-group">
+                            <label>লেখকের নাম</label>
+                            <input type="text" id="s-author-name" placeholder="Enamuzzaman Adil">
+                        </div>
+                        <div class="form-group">
+                            <label>শিক্ষাগত যোগ্যতা</label>
+                            <input type="text" id="s-author-creds" placeholder="BBA, MBA — University of Dhaka">
+                        </div>
+                        <div class="form-group">
+                            <label>অভিজ্ঞতা</label>
+                            <input type="text" id="s-author-exp" placeholder="১২ বছরের শিক্ষকতার অভিজ্ঞতা">
+                        </div>
+                        <div class="form-group">
+                            <label>আমাদের সম্পর্কে (About) টেক্সট</label>
+                            <textarea id="s-about-text" rows="3" placeholder="Golden Student Vocabulary শিক্ষার্থীদের জন্য..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="settings-actions">
+                <button class="btn-primary" onclick="saveSettings()">💾 সেটিংস সেভ করুন</button>
+                <span id="settings-saved" class="save-msg" style="display:none">✅ সেভ হয়েছে!</span>
             </div>
         </div>
+
+    </main>
+</div>
+
+<!-- ═══ BOOK MODAL ═══ -->
+<div class="modal-backdrop" id="book-modal">
+    <div class="modal-box">
+        <div class="modal-head">
+            <h3 id="book-modal-title">নতুন বই যোগ করুন</h3>
+            <button class="modal-close-btn" onclick="closeBookModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="edit-book-id">
+            <div class="modal-grid">
+
+                <div class="form-group">
+                    <label>বইয়ের নাম</label>
+                    <input type="text" id="book-title" placeholder="Golden Student Voc@bulary">
+                </div>
+
+                <div class="form-group">
+                    <label>শ্রেণি * <small style="font-weight:400;text-transform:none">(যেমন: Class 3)</small></label>
+                    <input type="text" id="book-class-label" placeholder="Class 3">
+                </div>
+
+                <div class="form-group">
+                    <label>মূল্য (৳) *</label>
+                    <input type="number" id="book-price" placeholder="500">
+                </div>
+
+                <div class="form-group">
+                    <label>ওজন (গ্রাম) — ঐচ্ছিক</label>
+                    <input type="number" id="book-weight" placeholder="200">
+                </div>
+
+                <div class="form-group full">
+                    <label>
+                        সাজানোর ক্রম
+                        <small style="font-weight:400;text-transform:none"> — কোন বই সাইটে আগে দেখাবে। যেমন Class 3 = 1, Class 4 = 2</small>
+                    </label>
+                    <input type="number" id="book-order" placeholder="1">
+                </div>
+
+                <div class="form-group full">
+                    <div class="desc-label-row">
+                        <label>বিবরণ</label>
+                        <button type="button" class="btn-ai-desc" id="ai-desc-btn" onclick="generateDescription()">
+                            ✨ AI দিয়ে লিখুন
+                        </button>
+                    </div>
+                    <textarea id="book-desc" rows="3"
+                        placeholder="বোর্ড বইয়ের শব্দের অর্থ, Synonyms, Antonyms, Parts of Speech"></textarea>
+                    <div id="ai-desc-loading" style="display:none;font-size:0.85rem;color:#EC4899;margin-top:0.4rem;">
+                        ✨ AI লিখছে...
+                    </div>
+                </div>
+
+                <div class="form-group full">
+                    <label>বইয়ের কভার ছবি</label>
+                    <div class="upload-area" onclick="document.getElementById('cover-file').click()">
+                        <div id="cover-preview-wrap">
+                            <span class="upload-icon">🖼️</span>
+                            <p>ছবি আপলোড করতে ক্লিক করুন</p>
+                            <small>PNG, JPG — সর্বোচ্চ 5MB</small>
+                        </div>
+                    </div>
+                    <input type="file" id="cover-file" accept="image/*" style="display:none"
+                           onchange="previewCover(this)">
+                    <input type="hidden" id="book-cover-url">
+                </div>
+
+                <div class="form-group full">
+                    <label>
+                        PDF লিংক (একটু পড়ে দেখুন)
+                        <small style="font-weight:400;text-transform:none"> — ঐচ্ছিক</small>
+                    </label>
+                    <div class="pdf-link-box">
+                        <span class="pdf-link-icon">📄</span>
+                        <input type="url" id="book-pdf-url"
+                            placeholder="Google Drive PDF লিংক এখানে paste করুন">
+                    </div>
+                    <small class="field-hint">
+                        💡 Google Drive → ফাইলে Right Click → Share → "Anyone with the link" → Copy link → এখানে paste করুন
+                    </small>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn-secondary" onclick="closeBookModal()">বাতিল</button>
+            <button class="btn-primary" id="save-book-btn" onclick="saveBook()">💾 সেভ করুন</button>
+        </div>
     </div>
+</div>
 
-    <!-- Toast -->
-    <div class="admin-toast" id="admin-toast"></div>
+<!-- Toast -->
+<div class="admin-toast" id="admin-toast"></div>
 
-    <script type="module" src="../js/admin.js"></script>
+<script type="module" src="../js/admin.js"></script>
 </body>
 </html>
