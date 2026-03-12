@@ -152,7 +152,7 @@ function buildOrderCard(o) {
             <div class="order-total"><span>মোট</span><strong>৳${o.total || 0}</strong></div>
         </div>
         <div class="order-actions-row">
-            <select class="status-select" onchange="updateOrderStatus('${o.id}', this.value)">
+            <select class="status-select" id="status-${o.id}">
                 <option value="pending"   ${o.status === 'pending'   ? 'selected' : ''}>⏳ পেন্ডিং</option>
                 <option value="confirmed" ${o.status === 'confirmed' ? 'selected' : ''}>✅ কনফার্মড</option>
                 <option value="shipped"   ${o.status === 'shipped'   ? 'selected' : ''}>🚚 শিপড</option>
@@ -160,17 +160,19 @@ function buildOrderCard(o) {
                 <option value="cancelled" ${o.status === 'cancelled' ? 'selected' : ''}>❌ বাতিল</option>
                 <option value="rejected"  ${o.status === 'rejected'  ? 'selected' : ''}>🚫 প্রত্যাখ্যাত</option>
             </select>
-            <input type="date" class="date-input" value="${o.deliveryDate || ''}"
-                   onchange="updateDeliveryDate('${o.id}', this.value)"
-                   title="ডেলিভারির তারিখ">
-            <a class="btn-wa" href="https://wa.me/${waNumFull}?text=${waMsg}" target="_blank">
-                💬 WhatsApp
-            </a>
+            <div class="date-row">
+                <input type="date" class="date-input" id="date-${o.id}" value="${o.deliveryDate || ''}" title="ডেলিভারির তারিখ">
+                <button class="btn-today" onclick="setToday('${o.id}')" title="আজকের তারিখ সেট করুন">📅 আজ</button>
+            </div>
+            <a class="btn-wa" href="https://wa.me/${waNumFull}?text=${waMsg}" target="_blank">💬 WhatsApp</a>
         </div>
         <div class="order-notes">
-            <input type="text" placeholder="নোট লিখুন (blur হলে সেভ হবে)..."
-                   value="${o.notes || ''}"
-                   onblur="updateOrderNote('${o.id}', this.value)">
+            <input type="text" class="note-input" id="note-${o.id}"
+                   placeholder="নোট লিখুন..."
+                   value="${o.notes || ''}">
+        </div>
+        <div class="order-save-row">
+            <button class="btn-save-order" onclick="saveOrderChanges('${o.id}')">💾 সেভ করুন</button>
         </div>
     </div>`;
 }
@@ -183,32 +185,31 @@ function statusLabel(s) {
     return labels[s] || 'পেন্ডিং';
 }
 
-window.updateOrderStatus = async function(id, status) {
+window.setToday = function(id) {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById(`date-${id}`).value = today;
+};
+
+window.saveOrderChanges = async function(id) {
+    const status = document.getElementById(`status-${id}`).value;
+    const date   = document.getElementById(`date-${id}`).value;
+    const notes  = document.getElementById(`note-${id}`).value;
+
     try {
-        await updateDoc(doc(db, 'orders', id), { status });
+        await updateDoc(doc(db, 'orders', id), { status, deliveryDate: date, notes });
+
+        // Update card visuals
         const card = document.getElementById(`order-${id}`);
         if (card) {
             card.className = `order-card status-${status}`;
             const badge = card.querySelector('.status-badge');
-            badge.className = `status-badge badge-${status}`;
+            badge.className   = `status-badge badge-${status}`;
             badge.textContent = statusLabel(status);
         }
-        showAdminToast('স্ট্যাটাস আপডেট হয়েছে ✓');
-    } catch (e) { showAdminToast('আপডেট ব্যর্থ: ' + e.message); }
-};
-
-window.updateDeliveryDate = async function(id, date) {
-    try {
-        await updateDoc(doc(db, 'orders', id), { deliveryDate: date });
-        showAdminToast('তারিখ সেভ হয়েছে ✓');
-    } catch (e) {}
-};
-
-window.updateOrderNote = async function(id, notes) {
-    try {
-        await updateDoc(doc(db, 'orders', id), { notes });
-        showAdminToast('নোট সেভ হয়েছে ✓');
-    } catch (e) {}
+        showAdminToast('✅ অর্ডার সেভ হয়েছে!');
+    } catch (e) {
+        showAdminToast('সেভ ব্যর্থ: ' + e.message);
+    }
 };
 
 // ══════════════════════════════════════════
@@ -456,6 +457,7 @@ function populateSettingsForm(s) {
     // Simple map: Firebase key → input element ID
     const map = {
         whatsappNumber:      's-whatsapp',
+        deliveryFeePerBook:  's-delivery-fee',
         'contact-phone':     's-phone',
         'contact-email':     's-email',
         colorPrimary:        's-color-primary',
@@ -497,6 +499,7 @@ function setupColorSync() {
 window.saveSettings = async function() {
     const s = {
         whatsappNumber:     document.getElementById('s-whatsapp').value.trim(),
+        deliveryFeePerBook: Number(document.getElementById('s-delivery-fee').value) || 0,
         'contact-phone':    document.getElementById('s-phone').value.trim(),
         'contact-whatsapp': document.getElementById('s-phone').value.trim(), // same number
         'contact-email':    document.getElementById('s-email').value.trim(),

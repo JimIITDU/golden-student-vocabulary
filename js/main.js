@@ -239,13 +239,22 @@ function renderCart() {
         </div>`;
     }).join('');
 
-    document.getElementById('cart-total-amount').textContent = `৳${total}`;
+    const totalBooks  = cart.reduce((s, i) => s + (i.qty || 1), 0);
+    const deliveryFee = (siteSettings.deliveryFeePerBook || 0) * totalBooks;
+    const websiteFee  = siteSettings.websiteFee || 0;
+    const grandTotal  = total + deliveryFee + websiteFee;
+
+    document.getElementById('cart-total-amount').innerHTML =
+        `<div class="cart-fee-row"><span>বইয়ের মূল্য</span><span>৳${total}</span></div>
+         <div class="cart-fee-row"><span>ডেলিভারি ফি</span><span>৳${deliveryFee}</span></div>
+         ${websiteFee > 0 ? `<div class="cart-fee-row"><span>ওয়েবসাইট ফি</span><span>৳${websiteFee}</span></div>` : ''}
+         <div class="cart-fee-row grand"><span>সর্বমোট</span><span>৳${grandTotal}</span></div>`;
     footer.style.display = '';
 }
 
 window.openCart      = () => document.getElementById('cart-modal').classList.add('open');
 window.closeCart     = () => document.getElementById('cart-modal').classList.remove('open');
-window.closeCheckout = () => document.getElementById('checkout-modal').classList.remove('open');
+window.closeChbeckout = () => document.getElementById('checkout-modal').classList.remove('open');
 
 window.openCheckout = function() {
     closeCart();
@@ -262,7 +271,15 @@ function buildCheckoutSummary() {
         total += sub;
         return `<div class="summary-row"><span>${item.classLabel} × ${item.qty}</span><span>৳${sub}</span></div>`;
     }).join('');
-    box.innerHTML = rows + `<div class="summary-total"><span>মোট</span><strong>৳${total}</strong></div>`;
+    const totalBooks  = cart.reduce((s, i) => s + (i.qty || 1), 0);
+    const deliveryFee = (siteSettings.deliveryFeePerBook || 0) * totalBooks;
+    const websiteFee  = siteSettings.websiteFee || 0;
+    const grandTotal  = total + deliveryFee + websiteFee;
+
+    box.innerHTML = rows +
+        `<div class="summary-row fee"><span>ডেলিভারি ফি</span><span>৳${deliveryFee}</span></div>
+         ${websiteFee > 0 ? `<div class="summary-row fee"><span>ওয়েবসাইট ফি</span><span>৳${websiteFee}</span></div>` : ''}
+         <div class="summary-total"><span>সর্বমোট</span><strong>৳${grandTotal}</strong></div>`;
 }
 
 function setupPaymentToggle() {
@@ -287,8 +304,13 @@ window.placeOrder = async function() {
     if (!address) { showToast('⚠️ ঠিকানা লিখুন'); return; }
     if (cart.length === 0) { showToast('কার্ট খালি'); return; }
 
-    const total     = cart.reduce((s, i) => s + (i.price || 0) * (i.qty || 1), 0);
-    const orderId   = 'GSV' + Date.now();
+    const booksTotal  = cart.reduce((s, i) => s + (i.price || 0) * (i.qty || 1), 0);
+    const totalBooks  = cart.reduce((s, i) => s + (i.qty || 1), 0);
+    const deliveryFee = (siteSettings.deliveryFeePerBook || 0) * totalBooks;
+    const websiteFee  = siteSettings.websiteFee || 0;
+    const grandTotal  = booksTotal + deliveryFee + websiteFee;
+    const orderId     = 'GSV' + Date.now();
+
     const bookLines = cart.map(i =>
         `• ${i.classLabel}: ৳${i.price} × ${i.qty} = ৳${(i.price || 0) * (i.qty || 1)}`
     ).join('\n');
@@ -305,7 +327,11 @@ window.placeOrder = async function() {
 📚 *অর্ডারকৃত বই:*
 ${bookLines}
 
-💰 *মোট: ৳${total}*`
+💰 *বইয়ের মূল্য:* ৳${booksTotal}
+🚚 *ডেলিভারি ফি:* ৳${deliveryFee} (৳${siteSettings.deliveryFeePerBook || 0} × ${totalBooks} বই)
+🌐 *ওয়েবসাইট ফি:* ৳${websiteFee}
+━━━━━━━━━━━━━━
+💵 *সর্বমোট: ৳${grandTotal}*`
     );
 
     // Save order to Firebase
@@ -319,13 +345,15 @@ ${bookLines}
                 price:  i.price,
                 qty:    i.qty || 1
             })),
-            total,
+            booksTotal,
+            deliveryFee,
+            websiteFee,
+            total: grandTotal,
             status:    'pending',
             createdAt: serverTimestamp()
         });
     } catch (e) {
         console.error('Order save error:', e);
-        // Still open WhatsApp even if Firebase fails
     }
 
     // Open WhatsApp

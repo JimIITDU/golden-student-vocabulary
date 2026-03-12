@@ -267,10 +267,16 @@ a { text-decoration: none; color: inherit; }
 
 .books-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
 }
 
+@media (max-width: 500px) {
+    .books-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
 .books-loading {
     grid-column: 1/-1;
     display: flex;
@@ -1015,4 +1021,20 @@ a { text-decoration: none; color: inherit; }
     width: auto;
     object-fit: contain;
     filter: drop-shadow(0 4px 16px rgba(0,0,0,0.12));
+}
+
+.cart-fee-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    color: var(--text-light);
+    padding: 0.2rem 0;
+}
+.cart-fee-row.grand {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    border-top: 1.5px solid var(--color-primary-light);
+    margin-top: 0.4rem;
+    padding-top: 0.5rem;
 }
