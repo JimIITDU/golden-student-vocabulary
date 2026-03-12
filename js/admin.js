@@ -413,20 +413,16 @@ window.generateDescription = async function() {
     loading.style.display = 'block';
 
     try {
-        const response = await fetch('https://api.anthropic.com/v1/messages', {
+        const prompt = `Write a short 1-2 sentence book description in Bengali for a vocabulary book called "${title || 'Golden Student Voc@bulary'}"
+         for ${classLabel} students in Bangladesh. It covers word meanings, synonyms, antonyms, and parts of speech from the national board textbook. Return only the description text, nothing else.`;
+
+        const response = await fetch('/.netlify/functions/generate-desc', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                model:      'claude-sonnet-4-20250514',
-                max_tokens: 150,
-                messages: [{
-                    role:    'user',
-                    content: `Write a short 1-2 sentence book description in Bengali (বাংলা) for a vocabulary book called "${title || 'Golden Student Voc@bulary'}" for ${classLabel} students in Bangladesh. It covers word meanings, synonyms, antonyms, and parts of speech from the national board textbook. Keep it simple and appealing to parents and students. Return only the description text, nothing else.`
-                }]
-            })
+            body: JSON.stringify({ classLabel, title })
         });
         const data = await response.json();
-        const text = data.content?.[0]?.text || '';
+        const text = data.text || '';
         if (text) {
             document.getElementById('book-desc').value = text.trim();
             showAdminToast('✨ AI লিখেছে!');
@@ -470,8 +466,14 @@ function populateSettingsForm(s) {
         'title-main':        's-title-main',
         tagline:             's-tagline',
         'hero-desc':         's-hero-desc',
-        'about-text':        's-about-text',
-        'author-name':       's-author-name',
+        'about-text':       's-about-text',
+        'feat1-title':      's-feat1-title',
+        'feat1-text':       's-feat1-text',
+        'feat2-title':      's-feat2-title',
+        'feat2-text':       's-feat2-text',
+        'feat3-title':      's-feat3-title',
+        'feat3-text':       's-feat3-text',
+        'author-name':      's-author-name',
         'author-creds':      's-author-creds',
         'author-exp':        's-author-exp',
     };
@@ -516,6 +518,12 @@ window.saveSettings = async function() {
         tagline:            document.getElementById('s-tagline').value.trim(),
         'hero-desc':        document.getElementById('s-hero-desc').value.trim(),
         'about-text':       document.getElementById('s-about-text').value.trim(),
+        'feat1-title':      document.getElementById('s-feat1-title').value.trim(),
+        'feat1-text':       document.getElementById('s-feat1-text').value.trim(),
+        'feat2-title':      document.getElementById('s-feat2-title').value.trim(),
+        'feat2-text':       document.getElementById('s-feat2-text').value.trim(),
+        'feat3-title':      document.getElementById('s-feat3-title').value.trim(),
+        'feat3-text':       document.getElementById('s-feat3-text').value.trim(),
         'author-name':      document.getElementById('s-author-name').value.trim(),
         'author-creds':     document.getElementById('s-author-creds').value.trim(),
         'author-exp':       document.getElementById('s-author-exp').value.trim(),

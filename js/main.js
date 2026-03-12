@@ -287,7 +287,7 @@ function renderCart() {
 
 window.openCart      = () => document.getElementById('cart-modal').classList.add('open');
 window.closeCart     = () => document.getElementById('cart-modal').classList.remove('open');
-window.closeChbeckout = () => document.getElementById('checkout-modal').classList.remove('open');
+window.closeCheckout = () => document.getElementById('checkout-modal').classList.remove('open');
 
 window.openCheckout = function() {
     closeCart();
