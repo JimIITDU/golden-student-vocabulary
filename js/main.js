@@ -112,11 +112,35 @@ async function loadBooks() {
         books.sort((a, b) => (a.order || 99) - (b.order || 99));
         grid.innerHTML = '';
         books.forEach((book, i) => grid.appendChild(createBookCard(book, i)));
+
+        // Build filter buttons from actual book classes
+        const filter = document.getElementById('books-filter');
+        const classes = [...new Set(books.map(b => b.classLabel).filter(Boolean))];
+        filter.innerHTML = `<button class="filter-btn active" onclick="filterBooks('all')">সব বই</button>`;
+        classes.forEach(cls => {
+            filter.innerHTML += `<button class="filter-btn" onclick="filterBooks('${cls}')">${cls}</button>`;
+        });
+
+        // Store books globally for filtering
+        window._allBooks = books;
     } catch (e) {
         console.error(e);
         grid.innerHTML = `<div class="books-loading"><p>বই লোড করতে সমস্যা হয়েছে।</p></div>`;
     }
 }
+
+window.filterBooks = function(classLabel) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const grid  = document.getElementById('books-grid');
+    const books = classLabel === 'all'
+        ? window._allBooks
+        : window._allBooks.filter(b => b.classLabel === classLabel);
+
+    grid.innerHTML = '';
+    books.forEach((book, i) => grid.appendChild(createBookCard(book, i)));
+};
 
 function createBookCard(book, index) {
     const card = document.createElement('div');

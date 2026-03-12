@@ -16,6 +16,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
     <!-- <link rel="icon" href="assets/logo.jpeg"> -->
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-VGG1LG8QSE');
+</script>
 </head>
 <body>
     <!-- ═══ NAVBAR ═══ -->
@@ -66,6 +73,9 @@
                 <p class="section-sub" data-editable="books-subtitle">প্রতিটি ক্লাসের জন্য বিশেষভাবে প্রস্তুত শব্দভাণ্ডার</p>
             </div>
             <div class="books-grid" id="books-grid">
+                <div class="books-filter" id="books-filter">
+                <button class="filter-btn active" onclick="filterBooks('all')">সব বই</button>
+            </div>
                 <!-- Books loaded from Firebase -->
                 <div class="books-loading">
                     <div class="spinner"></div>
@@ -160,7 +170,7 @@
     <footer class="footer">
         <div class="container">
             <p data-editable="footer-text">© 2025–2026 Golden Student Voc@bulary. সর্বস্বত্ব সংরক্ষিত।</p>
-            <p class="footer-tag" data-editable="footer-tag">Your effort, our support — আপনার চেষ্টা, আমাদের সহযোগিতা 📚</p>
+            <!-- <p class="footer-tag" data-editable="footer-tag">Your effort, our support — আপনার চেষ্টা, আমাদের সহযোগিতা 📚</p> -->
             <p class="footer-dev">
                 Developed by <strong>Akidul Islam</strong>
                 <a href="https://www.facebook.com/Akidul201103/" target="_blank" class="dev-link" title="Facebook">

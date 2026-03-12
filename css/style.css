@@ -1125,3 +1125,25 @@ a { text-decoration: none; color: inherit; }
     transition: all 0.2s;
 }
 .btn-success-close:hover { background: #DB2777; transform: translateY(-2px); }
+
+.books-filter {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+.filter-btn {
+    background: white;
+    border: 1.5px solid var(--color-primary-light);
+    color: var(--text-dark);
+    padding: 0.5rem 1.2rem;
+    border-radius: 30px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.2s;
+}
+.filter-btn:hover  { border-color: var(--color-primary-dark); color: var(--color-primary-dark); }
+.filter-btn.active { background: var(--color-primary-dark); color: white; border-color: var(--color-primary-dark); }
