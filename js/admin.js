@@ -422,7 +422,7 @@ window.generateDescription = async function() {
             body: JSON.stringify({ classLabel, title })
         });
         const data = await response.json();
-        const text = data.text || '';
+        const text = data.text || '';``
         if (text) {
             document.getElementById('book-desc').value = text.trim();
             showAdminToast('✨ AI লিখেছে!');
@@ -473,6 +473,7 @@ function populateSettingsForm(s) {
         'feat2-text':       's-feat2-text',
         'feat3-title':      's-feat3-title',
         'feat3-text':       's-feat3-text',
+        'author-photo':     's-author-photo',
         'author-name':      's-author-name',
         'author-creds':      's-author-creds',
         'author-exp':        's-author-exp',
@@ -483,6 +484,11 @@ function populateSettingsForm(s) {
         if (!el || !s[key]) return;
         el.value = s[key];
     });
+    // Show author photo preview if exists
+    if (s['author-photo']) {
+        document.getElementById('author-photo-preview').innerHTML =
+            `<img src="${s['author-photo']}" style="max-height:120px;border-radius:50%;margin:0 auto;">`;
+    }
 }
 
 function setupColorSync() {
@@ -524,6 +530,7 @@ window.saveSettings = async function() {
         'feat2-text':       document.getElementById('s-feat2-text').value.trim(),
         'feat3-title':      document.getElementById('s-feat3-title').value.trim(),
         'feat3-text':       document.getElementById('s-feat3-text').value.trim(),
+        'author-photo':     document.getElementById('s-author-photo').value,
         'author-name':      document.getElementById('s-author-name').value.trim(),
         'author-creds':     document.getElementById('s-author-creds').value.trim(),
         'author-exp':       document.getElementById('s-author-exp').value.trim(),
@@ -541,6 +548,14 @@ window.saveSettings = async function() {
     } catch (e) {
         showAdminToast('সেভ ব্যর্থ: ' + e.message);
     }
+};
+
+window.previewAuthorPhoto = async function(input) {
+    if (!input.files[0]) return;
+    const base64 = await fileToBase64(input.files[0]);
+    document.getElementById('s-author-photo').value = base64;
+    document.getElementById('author-photo-preview').innerHTML =
+        `<img src="${base64}" style="max-height:120px;border-radius:50%;margin:0 auto;">`;
 };
 
 // ══════════════════════════════════════════

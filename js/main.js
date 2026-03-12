@@ -90,6 +90,17 @@ function applySettings(s) {
 
     // For WhatsApp order sending
     if (s.whatsappNumber) window._adminWhatsapp = s.whatsappNumber;
+
+    // Author photo
+    if (s['author-photo']) {
+        const el = document.getElementById('author-avatar');
+        if (el) el.innerHTML = `<img src="${s['author-photo']}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    }
+
+    // Delivery fee for cart calculations
+    if (s.deliveryFeePerBook !== undefined) window._deliveryFee = s.deliveryFeePerBook;
+    if (s.websiteFee !== undefined) window._websiteFee = s.websiteFee;
+}
 }
 
 window.closeSuccess = function() {
