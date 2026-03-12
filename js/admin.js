@@ -478,23 +478,25 @@ function populateSettingsForm(s) {
         const el = document.getElementById(id);
         if (!el || !s[key]) return;
         el.value = s[key];
-        // Sync color picker text box too
-        const textEl = document.getElementById(id + '-text');
-        if (textEl) textEl.value = s[key];
     });
 }
 
 function setupColorSync() {
-    ['s-color-primary', 's-color-primary-dark', 's-color-secondary', 's-color-accent'].forEach(id => {
-        const colorEl = document.getElementById(id);
-        const textEl  = document.getElementById(id + '-text');
-        if (!colorEl || !textEl) return;
-        colorEl.addEventListener('input', () => { textEl.value = colorEl.value; });
-        textEl.addEventListener('input', () => {
-            if (/^#[0-9A-Fa-f]{6}$/.test(textEl.value)) colorEl.value = textEl.value;
+    document.querySelectorAll('.color-picker-item').forEach(item => {
+        item.addEventListener('click', () => {
+            item.querySelector('input[type="color"]').click();
         });
     });
 }
+
+window.resetColors = function() {
+    if (!confirm('ডিফল্ট রঙে ফিরে যাবেন?')) return;
+    document.getElementById('s-color-primary').value      = '#F9A8D4';
+    document.getElementById('s-color-primary-dark').value = '#EC4899';
+    document.getElementById('s-color-secondary').value    = '#22C55E';
+    document.getElementById('s-color-accent').value       = '#EAB308';
+    showAdminToast('ডিফল্ট রঙ সেট হয়েছে — সেভ করুন');
+};
 
 window.saveSettings = async function() {
     const s = {

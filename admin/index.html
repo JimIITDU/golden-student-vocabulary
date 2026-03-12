@@ -6,6 +6,7 @@
     <title>Admin Panel — Golden Student Voc@bulary</title>
     <link rel="stylesheet" href="../css/admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../assets/logo.jpeg">
 </head>
 <body>
 
@@ -127,40 +128,47 @@
                     </div>
                 </div>
 
-                <!-- Colors -->
-                <div class="settings-card">
-                    <h3>🎨 রঙ পরিবর্তন</h3>
-                    <div class="color-grid">
-                        <div class="form-group">
-                            <label>Pink (হালকা)</label>
-                            <div class="color-row">
-                                <input type="color" id="s-color-primary" value="#F9A8D4">
-                                <input type="text"  id="s-color-primary-text" value="#F9A8D4">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Pink (গাঢ়)</label>
-                            <div class="color-row">
-                                <input type="color" id="s-color-primary-dark" value="#EC4899">
-                                <input type="text"  id="s-color-primary-dark-text" value="#EC4899">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Green</label>
-                            <div class="color-row">
-                                <input type="color" id="s-color-secondary" value="#22C55E">
-                                <input type="text"  id="s-color-secondary-text" value="#22C55E">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Yellow</label>
-                            <div class="color-row">
-                                <input type="color" id="s-color-accent" value="#EAB308">
-                                <input type="text"  id="s-color-accent-text" value="#EAB308">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               <!-- Colors -->
+<div class="settings-card">
+    <h3>🎨 রঙ পরিবর্তন</h3>
+    <p style="font-size:0.82rem;color:var(--text-mid);margin-bottom:1rem;">রঙের বাক্সে ক্লিক করুন এবং পছন্দের রঙ বেছে নিন</p>
+    <div class="color-picker-grid">
+
+        <div class="color-picker-item">
+            <input type="color" id="s-color-primary" value="#F9A8D4" class="big-color-input">
+            <div class="color-picker-label">
+                <strong>মূল রঙ (হালকা)</strong>
+                <small>ব্যাকগ্রাউন্ড, বর্ডার</small>
+            </div>
+        </div>
+
+        <div class="color-picker-item">
+            <input type="color" id="s-color-primary-dark" value="#EC4899" class="big-color-input">
+            <div class="color-picker-label">
+                <strong>মূল রঙ (গাঢ়)</strong>
+                <small>বাটন, নেভবার, হাইলাইট</small>
+            </div>
+        </div>
+
+        <div class="color-picker-item">
+            <input type="color" id="s-color-secondary" value="#22C55E" class="big-color-input">
+            <div class="color-picker-label">
+                <strong>সেকেন্ডারি রঙ</strong>
+                <small>মূল্য, সাফল্য বার্তা</small>
+            </div>
+        </div>
+
+        <div class="color-picker-item">
+            <input type="color" id="s-color-accent" value="#EAB308" class="big-color-input">
+            <div class="color-picker-label">
+                <strong>অ্যাকসেন্ট রঙ</strong>
+                <small>ব্যাজ, শ্রেণি লেবেল</small>
+            </div>
+        </div>
+
+    </div>
+    <button class="btn-reset-colors" onclick="resetColors()">↺ ডিফল্ট রঙে ফিরে যান</button>
+</div>
 
                 <!-- Text Content -->
                 <div class="settings-card full-width">
@@ -172,7 +180,7 @@
                         </div>
                         <div class="form-group">
                             <label>সাইটের নাম (Title)</label>
-                            <input type="text" id="s-title-main" placeholder="Golden">
+                            <input type="text" id="s-title-main" placeholder="don't change it">
                         </div>
                         <div class="form-group">
                             <label>Tagline</label>

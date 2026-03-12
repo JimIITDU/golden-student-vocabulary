@@ -346,16 +346,41 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); min-
 }
 .settings-card.full-width { grid-column: 1 / -1; }
 
-.color-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
-.color-row  { display: flex; gap: 0.4rem; align-items: center; }
-.color-row input[type="color"] {
-    width: 40px; height: 34px; border: none; border-radius: 6px; cursor: pointer; padding: 2px;
+.color-picker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
-.color-row input[type="text"] {
-    flex: 1; padding: 0.45rem 0.6rem;
-    border: 1.5px solid var(--border); border-radius: 8px;
-    font-family: var(--font); font-size: 0.88rem;
+.color-picker-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.8rem;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
 }
+.color-picker-item:hover { border-color: var(--pink); background: var(--pink-light); }
+.big-color-input {
+    width: 52px !important;
+    height: 52px !important;
+    border: none !important;
+    border-radius: 10px !important;
+    cursor: pointer;
+    padding: 2px !important;
+    flex-shrink: 0;
+}
+.color-picker-label strong { display: block; font-size: 0.88rem; margin-bottom: 0.15rem; }
+.color-picker-label small  { font-size: 0.76rem; color: var(--text-mid); }
+.btn-reset-colors {
+    background: none; border: 1.5px solid var(--border);
+    color: var(--text-mid); padding: 0.5rem 1rem;
+    border-radius: 8px; font-size: 0.82rem; font-family: var(--font);
+    cursor: pointer; transition: all 0.2s;
+}
+.btn-reset-colors:hover { border-color: var(--pink); color: var(--pink); }
 
 .text-fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 1.2rem; }
 
@@ -524,6 +549,6 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); min-
     .settings-card.full-width { grid-column: auto; }
     .text-fields-grid    { grid-template-columns: 1fr; }
     .modal-grid          { grid-template-columns: 1fr; }
-    .color-grid          { grid-template-columns: 1fr; }
+    .color-picker-grid   { grid-template-columns: 1fr; }
     .admin-main          { padding: 1.2rem; }
 }
