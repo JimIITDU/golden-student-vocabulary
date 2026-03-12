@@ -576,7 +576,7 @@ a { text-decoration: none; color: inherit; }
     background: var(--text-dark);
     color: rgba(255,255,255,0.75);
     text-align: center;
-    padding: 2.5rem 0;
+    padding: 0.5rem 0;
     font-size: 0.95rem;
 }
 .footer p { margin-bottom: 0.3rem; }
@@ -1038,3 +1038,21 @@ a { text-decoration: none; color: inherit; }
     margin-top: 0.4rem;
     padding-top: 0.5rem;
 }
+
+.footer-dev {
+    margin-top: 0.8rem;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.footer-dev strong { color: rgba(255,255,255,0.8); }
+.dev-link {
+    display: inline-flex;
+    align-items: center;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+.dev-link:hover { opacity: 1; }
