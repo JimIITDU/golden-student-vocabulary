@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Golden Student Voc@bulary - Your effort, our support</title>
+    <title>Golden Student Voc@bulary</title>
+    <meta name="description" content="বাংলাদেশের শিক্ষার্থীদের জন্য সেরা শব্দভাণ্ডার বই। Class 3-7 এর বোর্ড বইয়ের Synonyms, Antonyms, Parts of Speech সহ সম্পূর্ণ গাইড।">
+    <meta property="og:title" content="Golden Student Voc@bulary">
+    <meta property="og:description" content="বাংলাদেশের শিক্ষার্থীদের জন্য সেরা শব্দভাণ্ডার বই।">
+    <meta property="og:image" content="assets/logo.jpg">
+    <meta property="og:url" content="https://goldenstudentvocubulary.netlify.app">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -194,7 +201,18 @@
             </div>
         </div>
     </div>
-
+    <!-- ═══ ORDER SUCCESS MODAL ═══ -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="success-panel">
+            <div class="success-icon">🎉</div>
+            <h2>অর্ডার সফল হয়েছে!</h2>
+            <p class="success-sub">আমরা শীঘ্রই আপনার সাথে যোগাযোগ করব</p>
+            <div class="success-order-id" id="success-order-id"></div>
+            <div class="success-details" id="success-details"></div>
+            <p class="success-note">📱 WhatsApp এ আপনার অর্ডার পাঠানো হয়েছে। আমাদের সাথে যোগাযোগ রাখুন।</p>
+            <button class="btn btn-success-close" onclick="closeSuccess()">ঠিক আছে</button>
+        </div>
+    </div>
     <!-- ═══ CHECKOUT MODAL ═══ -->
     <div class="modal-overlay" id="checkout-modal">
         <div class="checkout-panel">

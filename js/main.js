@@ -92,6 +92,10 @@ function applySettings(s) {
     if (s.whatsappNumber) window._adminWhatsapp = s.whatsappNumber;
 }
 
+window.closeSuccess = function() {
+    document.getElementById('success-modal').classList.remove('open');
+};
+
 // ══════════════════════════════════════════
 // BOOKS
 // ══════════════════════════════════════════
@@ -141,9 +145,14 @@ function createBookCard(book, index) {
                     ? `<button class="btn-preview" onclick="openPreview('${pdfUrl}')">👁 একটু পড়ে দেখুন</button>`
                     : `<button class="btn-preview" disabled style="opacity:0.4;cursor:default">📄 শীঘ্রই আসছে</button>`
                 }
-                <button class="btn-add-cart ${inCart ? 'added' : ''}" id="cart-btn-${book.id}">
-                    ${inCart ? '✓ কার্টে আছে' : '🛒 কার্টে যোগ করুন'}
-                </button>
+                ${book.stock === 'out_of_stock'
+                    ? `<button class="btn-add-cart out-of-stock" disabled>❌ স্টক শেষ</button>`
+                    : book.stock === 'coming_soon'
+                    ? `<button class="btn-add-cart out-of-stock" disabled>🔜 শীঘ্রই আসছে</button>`
+                    : `<button class="btn-add-cart ${inCart ? 'added' : ''}" id="cart-btn-${book.id}">
+                        ${inCart ? '✓ কার্টে আছে' : '🛒 কার্টে যোগ করুন'}
+                       </button>`
+                }
             </div>
         </div>`;
 
@@ -301,6 +310,9 @@ window.placeOrder = async function() {
 
     if (!name)    { showToast('⚠️ নাম লিখুন'); return; }
     if (!phone)   { showToast('⚠️ ফোন নম্বর লিখুন'); return; }
+    const phoneClean = phone.replace(/\s|-/g, '');
+    const validPhone = /^(\+8801|8801|01)[3-9]\d{8}$/.test(phoneClean);
+    if (!validPhone) { showToast('⚠️ সঠিক বাংলাদেশি নম্বর দিন। যেমন: 01XXXXXXXXX'); return; }
     if (!address) { showToast('⚠️ ঠিকানা লিখুন'); return; }
     if (cart.length === 0) { showToast('কার্ট খালি'); return; }
 
@@ -368,7 +380,14 @@ ${bookLines}
     document.getElementById('order-name').value    = '';
     document.getElementById('order-phone').value   = '';
     document.getElementById('order-address').value = '';
-    showToast('✅ অর্ডার পাঠানো হয়েছে!');
+
+    // Show success screen
+    document.getElementById('success-order-id').textContent = `অর্ডার ID: ${orderId}`;
+    document.getElementById('success-details').innerHTML =
+        `<div class="success-item"><span>নাম</span><strong>${name}</strong></div>
+         <div class="success-item"><span>ফোন</span><strong>${phone}</strong></div>
+         <div class="success-item"><span>মোট</span><strong>৳${grandTotal}</strong></div>`;
+    document.getElementById('success-modal').classList.add('open');
 };
 
 // ── SCROLL ANIMATIONS ─────────────────────

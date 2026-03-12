@@ -1056,3 +1056,72 @@ a { text-decoration: none; color: inherit; }
     transition: opacity 0.2s;
 }
 .dev-link:hover { opacity: 1; }
+
+.btn-add-cart.out-of-stock {
+    background: #F1F5F9;
+    color: #94A3B8;
+    cursor: not-allowed;
+    border: 1.5px solid #E2E8F0;
+}
+
+.success-panel {
+    background: white;
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    max-width: 420px;
+    width: 95%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+.success-icon { font-size: 4rem; margin-bottom: 1rem; animation: bounce 0.6s ease; }
+@keyframes bounce {
+    0%   { transform: scale(0); }
+    60%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+.success-panel h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 0.4rem; }
+.success-sub      { color: var(--text-light); margin-bottom: 1.2rem; }
+.success-order-id {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    padding: 0.6rem 1.2rem;
+    border-radius: 30px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    display: inline-block;
+    margin-bottom: 1.2rem;
+}
+.success-details {
+    background: var(--bg-light);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.2rem;
+    text-align: left;
+}
+.success-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0;
+    font-size: 0.9rem;
+}
+.success-item span  { color: var(--text-light); }
+.success-item strong { color: var(--text-dark); }
+.success-note {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+.btn-success-close {
+    background: var(--color-primary-dark);
+    color: white;
+    border: none;
+    padding: 0.9rem 2.5rem;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all 0.2s;
+}
+.btn-success-close:hover { background: #DB2777; transform: translateY(-2px); }

@@ -285,6 +285,7 @@ window.editBook = function(id) {
     document.getElementById('book-order').value       = book.order || '';
     document.getElementById('book-desc').value        = book.description || '';
     document.getElementById('book-pdf-url').value     = book.pdfUrl || '';
+    document.getElementById('book-stock').value       = book.stock || 'in_stock';
     document.getElementById('book-cover-url').value   = book.coverUrl || '';
 
     if (book.coverUrl) {
@@ -343,6 +344,7 @@ window.saveBook = async function() {
             title:       document.getElementById('book-title').value.trim() || 'Golden Student Voc@bulary',
             classLabel,
             price,
+            stock:       document.getElementById('book-stock').value,
             weight:      Number(document.getElementById('book-weight').value) || null,
             order:       Number(document.getElementById('book-order').value) || 99,
             description: document.getElementById('book-desc').value.trim(),
