@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Student Voc@bulary - Your effort, our support</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+</head>
+<body>
+
+    <!-- ═══ HERO ═══ -->
+    <header class="hero">
+        <div class="hero-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge" data-editable="hero-badge">📚 শিক্ষার্থীদের সেরা সঙ্গী</div>
+                <h1 class="main-title">
+                    <span class="title-golden" data-editable="title-main">Golden</span>
+                    <span class="title-sub" data-editable="title-sub">Student Voc@bulary</span>
+                </h1>
+                <p class="tagline" data-editable="tagline">Your effort, our support</p>
+                <p class="hero-desc" data-editable="hero-desc">A dictionary of your textbook — শেখার পথের সঙ্গী</p>
+                <div class="hero-actions">
+                    <a href="#books" class="btn btn-hero-primary">বই দেখুন</a>
+                    <a href="#about" class="btn btn-hero-outline">আমাদের সম্পর্কে</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <div class="scroll-dot"></div>
+        </div>
+    </header>
+
+    <!-- ═══ BOOKS SECTION ═══ -->
+    <section class="books-section" id="books">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-editable="books-title">আমাদের বই সমূহ</h2>
+                <p class="section-sub" data-editable="books-subtitle">প্রতিটি ক্লাসের জন্য বিশেষভাবে প্রস্তুত শব্দভাণ্ডার</p>
+            </div>
+            <div class="books-grid" id="books-grid">
+                <!-- Books loaded from Firebase -->
+                <div class="books-loading">
+                    <div class="spinner"></div>
+                    <p>বই লোড হচ্ছে...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ ABOUT SECTION ═══ -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text-col">
+                    <h2 class="section-title" data-editable="about-title">আমাদের সম্পর্কে</h2>
+                    <p class="about-text" data-editable="about-text">
+                        Golden Student Vocabulary শিক্ষার্থীদের জন্য একটি বিশেষ শব্দভাণ্ডার যা তাদের পাঠ্যপুস্তকের সাথে সামঞ্জস্যপূর্ণ। প্রতিটি ক্লাসের জন্য বিশেষভাবে তৈরি, বোর্ড বইয়ের শব্দের অর্থ, Synonyms, Antonyms এবং Parts of Speech সহ সম্পূর্ণ নির্দেশিকা।
+                    </p>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <span class="feature-icon">📖</span>
+                            <div>
+                                <strong data-editable="feat1-title">বোর্ড বই অনুযায়ী</strong>
+                                <p data-editable="feat1-text">প্রতিটি ক্লাসের বোর্ড বইয়ের সাথে সম্পূর্ণ সামঞ্জস্যপূর্ণ</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">✍️</span>
+                            <div>
+                                <strong data-editable="feat2-title">বিস্তারিত ব্যাখ্যা</strong>
+                                <p data-editable="feat2-text">Synonyms, Antonyms এবং Parts of Speech সহ</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎓</span>
+                            <div>
+                                <strong data-editable="feat3-title">অভিজ্ঞ শিক্ষক রচিত</strong>
+                                <p data-editable="feat3-text">১২ বছরের শিক্ষকতার অভিজ্ঞতা থেকে তৈরি</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-author-col">
+                    <div class="author-card">
+                        <div class="author-avatar">✍️</div>
+                        <div class="author-info">
+                            <span class="author-label">লিখেছেন</span>
+                            <h3 class="author-name" data-editable="author-name">Enamuzzaman Adil</h3>
+                            <p class="author-creds" data-editable="author-creds">BBA(Accounting), MBA(Accounting)<br>University of Dhaka</p>
+                            <span class="author-exp" data-editable="author-exp">১২ বছরের শিক্ষকতার অভিজ্ঞতা</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CONTACT SECTION ═══ -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-editable="contact-title">যোগাযোগ করুন</h2>
+                <p class="section-sub" data-editable="contact-sub">বই অর্ডার বা যেকোনো তথ্যের জন্য আমাদের সাথে যোগাযোগ করুন</p>
+            </div>
+            <div class="contact-grid">
+                <a href="tel:+8801521432606" class="contact-card">
+                    <span class="contact-icon">📞</span>
+                    <div>
+                        <strong>ফোন</strong>
+                        <span id="contact-phone" data-editable="contact-phone">+880 1521-432606</span>
+                    </div>
+                </a>
+                <a href="https://wa.me/8801521432606" class="contact-card whatsapp" target="_blank">
+                    <span class="contact-icon">💬</span>
+                    <div>
+                        <strong>WhatsApp</strong>
+                        <span id="contact-whatsapp" data-editable="contact-whatsapp">+880 1521-432606</span>
+                    </div>
+                </a>
+                <a href="mailto:adilenamuzzaman12@gmail.com" class="contact-card">
+                    <span class="contact-icon">✉️</span>
+                    <div>
+                        <strong>ইমেইল</strong>
+                        <span id="contact-email" data-editable="contact-email">adilenamuzzaman12@gmail.com</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="footer">
+        <div class="container">
+            <p data-editable="footer-text">© 2025–2026 Golden Student Voc@bulary. সর্বস্বত্ব সংরক্ষিত।</p>
+            <p class="footer-tag" data-editable="footer-tag">Your effort, our support — আপনার চেষ্টা, আমাদের সহযোগিতা 📚</p>
+        </div>
+    </footer>
+
+    <!-- ═══ FLOATING CART ═══ -->
+    <div class="floating-cart" id="floating-cart" onclick="openCart()">
+        <span class="cart-emoji">🛒</span>
+        <span class="cart-badge" id="cart-count">0</span>
+    </div>
+
+    <!-- ═══ CART MODAL ═══ -->
+    <div class="modal-overlay" id="cart-modal">
+        <div class="cart-panel">
+            <div class="cart-header">
+                <h3>🛒 আপনার কার্ট</h3>
+                <button class="modal-close" onclick="closeCart()">✕</button>
+            </div>
+            <div class="cart-body" id="cart-items">
+                <div class="cart-empty">
+                    <span>🛒</span>
+                    <p>কার্ট খালি আছে</p>
+                </div>
+            </div>
+            <div class="cart-footer" id="cart-footer" style="display:none">
+                <div class="cart-total">
+                    <span>মোট:</span>
+                    <strong id="cart-total-amount">৳0</strong>
+                </div>
+                <button class="btn btn-checkout" onclick="openCheckout()">অর্ডার করুন →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ CHECKOUT MODAL ═══ -->
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="checkout-panel">
+            <div class="cart-header">
+                <h3>📦 অর্ডার ফর্ম</h3>
+                <button class="modal-close" onclick="closeCheckout()">✕</button>
+            </div>
+            <div class="checkout-body">
+                <div class="form-group">
+                    <label>আপনার নাম *</label>
+                    <input type="text" id="order-name" placeholder="পূর্ণ নাম লিখুন">
+                </div>
+                <div class="form-group">
+                    <label>ফোন নম্বর *</label>
+                    <input type="tel" id="order-phone" placeholder="01XXXXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label>সম্পূর্ণ ঠিকানা *</label>
+                    <textarea id="order-address" placeholder="বাড়ি/ফ্ল্যাট নম্বর, রাস্তা, এলাকা, জেলা"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>পেমেন্ট পদ্ধতি</label>
+                    <div class="payment-options">
+                        <label class="payment-opt selected">
+                            <input type="radio" name="payment" value="cod" checked>
+                            <span>🏠 Cash on Delivery</span>
+                        </label>
+                        <label class="payment-opt coming-soon" title="শীঘ্রই আসছে">
+                            <input type="radio" name="payment" value="online" disabled>
+                            <span>📱 Online Payment <small>(শীঘ্রই)</small></span>
+                        </label>
+                    </div>
+                </div>
+                <div id="bkash-info" class="payment-info" style="display:none">
+                    <p>bKash নম্বর: <strong id="bkash-number">01XXX-XXXXXX</strong></p>
+                    <div class="form-group">
+                        <label>Transaction ID</label>
+                        <input type="text" id="order-txn" placeholder="Transaction ID লিখুন">
+                    </div>
+                </div>
+                <div class="order-summary-box" id="checkout-summary"></div>
+                <button class="btn btn-place-order" onclick="placeOrder()">
+                    💬 WhatsApp এ অর্ডার পাঠান
+                </button>
+                <p class="order-note">অর্ডার পাঠানোর পর আমরা আপনাকে কনফার্ম করব।</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
