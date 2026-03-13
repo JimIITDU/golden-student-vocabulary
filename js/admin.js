@@ -90,13 +90,18 @@ window.loadOrders = async function() {
         snap.forEach(d => allOrders.push({ id: d.id, ...d.data() }));
         loading.style.display = 'none';
         renderOrders(allOrders);
+        const params = new URLSearchParams(window.location.search);
+const savedFilter = params.get('filter') || 'all';
+document.getElementById('order-filter').value = savedFilter;
+filterOrders();
     } catch (e) {
         loading.innerHTML = `<p style="color:red">অর্ডার লোড ব্যর্থ: ${e.message}</p>`;
     }
 };
 
 window.filterOrders = function() {
-    const val      = document.getElementById('order-filter').value;
+    const val = document.getElementById('order-filter').value;
+    window.history.pushState({}, '', `?filter=${val}`);
     const filtered = val === 'all' ? allOrders : allOrders.filter(o => o.status === val);
     renderOrders(filtered);
 };
@@ -152,7 +157,7 @@ function buildOrderCard(o) {
             <div class="order-total"><span>মোট</span><strong>৳${o.total || 0}</strong></div>
         </div>
         <div class="order-actions-row">
-            <select class="status-select" id="status-${o.id}">
+            <select class="status-select" id="status-${o.id}" onchange="validateStatus('${o.id}', '${o.status}', this)">
                 <option value="pending"   ${o.status === 'pending'   ? 'selected' : ''}>⏳ পেন্ডিং</option>
                 <option value="confirmed" ${o.status === 'confirmed' ? 'selected' : ''}>✅ কনফার্মড</option>
                 <option value="shipped"   ${o.status === 'shipped'   ? 'selected' : ''}>🚚 শিপড</option>
@@ -209,6 +214,28 @@ window.saveOrderChanges = async function(id) {
         showAdminToast('✅ অর্ডার সেভ হয়েছে!');
     } catch (e) {
         showAdminToast('সেভ ব্যর্থ: ' + e.message);
+    }
+};
+
+const statusFlow = {
+    pending:   ['confirmed', 'cancelled', 'rejected'],
+    confirmed: ['shipped', 'cancelled', 'rejected'],
+    shipped:   ['completed', 'cancelled', 'rejected'],
+    completed: [],
+    cancelled: [],
+    rejected:  []
+};
+
+window.validateStatus = function(id, currentStatus, selectEl) {
+    const allowed = statusFlow[currentStatus] || [];
+    if (allowed.length === 0) {
+        showAdminToast('এই অর্ডারের স্ট্যাটাস আর পরিবর্তন করা যাবে না');
+        selectEl.value = currentStatus;
+        return;
+    }
+    if (!allowed.includes(selectEl.value)) {
+        showAdminToast('এই স্ট্যাটাসে যাওয়া যাবে না');
+        selectEl.value = currentStatus;
     }
 };
 
