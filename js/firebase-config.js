@@ -12,7 +12,7 @@ import { getAuth }        from "https://www.gstatic.com/firebasejs/10.7.1/fireba
 // 🔴 REPLACE THESE WITH YOUR ACTUAL FIREBASE CONFIG
 // Go to: Firebase Console → Project Settings → Your Apps → Web App
 const firebaseConfig = {
-  apiKey: "AIzaSyAl3frbAoV4bqumzfJR3Zb_h1VdGCOrb7U",
+  apiKey: "AIzaSyDBkL7Dlz3tF0UZIedGR9375__kzdlOSx8",
   authDomain: "golden-student-vocabulary.firebaseapp.com",
   projectId: "golden-student-vocabulary",
   storageBucket: "golden-student-vocabulary.firebasestorage.app",
