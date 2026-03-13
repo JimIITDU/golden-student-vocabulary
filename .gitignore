@@ -1,4 +1,5 @@
 .env
+js/firebase-config.js
 netlify.toml
 *.pdf
 *.docx
