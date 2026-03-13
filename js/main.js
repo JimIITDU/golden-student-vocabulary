@@ -101,7 +101,6 @@ function applySettings(s) {
     if (s.deliveryFeePerBook !== undefined) window._deliveryFee = s.deliveryFeePerBook;
     if (s.websiteFee !== undefined) window._websiteFee = s.websiteFee;
 }
-}
 
 window.closeSuccess = function() {
     document.getElementById('success-modal').classList.remove('open');

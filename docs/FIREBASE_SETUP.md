@@ -1,131 +1,53 @@
-# 🔥 Firebase Setup Guide — Golden Student Voc@bulary
+# Firebase Setup Guide
 
-Follow these steps ONE TIME to connect your website to Firebase.
+Complete step-by-step guide to set up Firebase for Golden Student Voc@bulary.
 
 ---
 
-## STEP 1 — Create a Firebase Project
+## Prerequisites
+- A Google account
+- A web browser
 
-1. Go to https://console.firebase.google.com
-2. Click **"Add project"**
-3. Name it: `golden-student-vocabulary`
+---
+
+## Step 1 — Create Firebase Project
+
+1. Go to [console.firebase.google.com](https://console.firebase.google.com)
+2. Click **Add project**
+3. Project name: `golden-student-vocabulary`
 4. Disable Google Analytics (not needed)
 5. Click **Create project**
 
 ---
 
-## STEP 2 — Enable Firestore Database
+## Step 2 — Enable Firestore Database
 
-1. In Firebase console → left menu → **Firestore Database**
+1. Left sidebar → **Firestore Database**
 2. Click **Create database**
-3. Choose **Start in test mode** (for now)
-4. Select region: `asia-south1` (Mumbai — closest to Bangladesh)
+3. Select **Start in production mode**
+4. Location: **asia-south1** (Mumbai — closest to Bangladesh)
 5. Click **Enable**
 
 ---
 
-## STEP 3 — Enable Firebase Storage
+## Step 3 — Set Firestore Security Rules
 
-1. Left menu → **Storage**
-2. Click **Get started**
-3. Choose **Start in test mode**
-4. Click **Done**
-
----
-
-## STEP 4 — Enable Authentication
-
-1. Left menu → **Authentication**
-2. Click **Get started**
-3. Under **Sign-in method** → Enable **Email/Password**
-4. Click **Save**
-
----
-
-## STEP 5 — Create Your Admin User
-
-1. In Authentication → **Users** tab
-2. Click **Add user**
-3. Enter your admin email and password
-4. Click **Add user**
-5. ⚠️ Remember these — this is how you log into the admin panel
-
----
-
-## STEP 6 — Get Your Firebase Config
-
-1. In Firebase console → ⚙️ Project Settings (gear icon)
-2. Scroll down to **"Your apps"** section
-3. Click **"</>"** (Web app icon)
-4. Register app name: `gsv-web`
-5. You'll see a config object like this:
-
-```js
-const firebaseConfig = {
-  apiKey: "AIzaSy...",
-  authDomain: "golden-student-vocabulary.firebaseapp.com",
-  projectId: "golden-student-vocabulary",
-  storageBucket: "golden-student-vocabulary.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef"
-};
-```
-
----
-
-## STEP 7 — Paste Config into Your Project
-
-Open `js/firebase-config.js` and replace the placeholder values:
-
-```js
-const firebaseConfig = {
-    apiKey:            "YOUR_ACTUAL_API_KEY",
-    authDomain:        "YOUR_PROJECT.firebaseapp.com",
-    projectId:         "YOUR_PROJECT",
-    storageBucket:     "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId:             "YOUR_APP_ID"
-};
-```
-
----
-
-## STEP 8 — Create Initial Settings Document
-
-In Firestore → **settings** collection → add document with ID `site`:
-
-```
-whatsappNumber:  "8801521432606"
-contact-phone:   "+880 1521-432606"
-contact-email:   "adilenamuzzaman12@gmail.com"
-bkashNumber:     ""
-```
-
----
-
-## STEP 9 — Set Firestore Security Rules
-
-In Firestore → **Rules** tab, paste:
+1. Firestore Database → **Rules** tab
+2. Replace everything with:
 
 ```
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // Orders: anyone can create, only admin can read/write
-    match /orders/{orderId} {
-      allow create: if true;
-      allow read, update, delete: if request.auth != null;
-    }
-
-    // Books: anyone can read, only admin can write
     match /books/{bookId} {
       allow read: if true;
       allow write: if request.auth != null;
     }
-
-    // Settings: anyone can read, only admin can write
-    match /settings/{doc} {
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+    match /settings/{docId} {
       allow read: if true;
       allow write: if request.auth != null;
     }
@@ -133,43 +55,115 @@ service cloud.firestore {
 }
 ```
 
+3. Click **Publish**
+
 ---
 
-## STEP 10 — Set Storage Security Rules
+## Step 4 — Enable Authentication
 
-In Storage → **Rules** tab, paste:
+1. Left sidebar → **Authentication**
+2. Click **Get started**
+3. **Sign-in method** tab → **Email/Password** → Enable → **Save**
 
+---
+
+## Step 5 — Create Admin User
+
+1. Authentication → **Users** tab
+2. Click **Add user**
+3. Enter admin email and password
+4. Click **Add user**
+
+---
+
+## Step 6 — Register Web App
+
+1. Project Overview → click **</>** (Web) icon
+2. App nickname: `gsv-web`
+3. Click **Register app**
+4. Copy the `firebaseConfig` object
+
+---
+
+## Step 7 — Create Settings Document
+
+1. Firestore → **Data** tab
+2. **+ Start collection** → ID: `settings`
+3. Document ID: `site`
+4. Add fields:
+
+| Field | Type | Value |
+|---|---|---|
+| `deliveryFeePerBook` | number | `0` |
+| `websiteFee` | number | `0` |
+| `whatsappNumber` | string | `01XXXXXXXXX` |
+
+---
+
+## Step 8 — Add Firebase Config
+
+Create `js/firebase-config.js`:
+
+```javascript
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+export const auth = getAuth(app);
 ```
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read: if true;
-      allow write: if request.auth != null;
-    }
-  }
-}
-```
+
+> ⚠️ This file is gitignored — never commit it to GitHub.
 
 ---
 
-## ✅ Done! 
+## Step 9 — Netlify Environment Variables
 
-Now:
-- Open `index.html` in your browser → customer site works
-- Open `admin/index.html` → log in with your email/password
-- Add your first book from the admin panel
-- The books will instantly appear on the customer site
+For the AI description feature, add to Netlify:
+- Dashboard → Site configuration → Environment variables
+- Key: `HF_TOKEN` — Value: your Hugging Face token from [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
 
 ---
 
-## 🌐 Deployment to Netlify
+## Step 10 — Verify & Test
 
-1. Go to https://netlify.com → Sign up free
-2. Drag your entire project folder onto the Netlify dashboard
-3. Your site goes live with a URL like `random-name.netlify.app`
-4. Buy a domain and connect it from Netlify settings
+1. Open site in browser → books section loads
+2. Login to admin → dashboard appears
+3. Add a test book → appears on customer site
+4. Place a test order → appears in order management
 
 ---
 
-*Questions? This file is in your docs/ folder for reference.*
+## Troubleshooting
+
+| Problem | Solution |
+|---|---|
+| Login fails | Check email/password in Firebase Auth |
+| Books not loading | Check Firestore rules are published |
+| Settings not saving | Make sure `settings/site` document exists |
+| AI description fails | Check `HF_TOKEN` in Netlify env vars |
+
+---
+
+## Firebase Free Plan Limits
+
+| Resource | Free Limit |
+|---|---|
+| Firestore reads | 50,000/day |
+| Firestore writes | 20,000/day |
+| Storage | 1 GB |
+| Authentication | Unlimited |
+
+---
+
+*For help: Akidul Islam — WhatsApp: 01768-962690*
