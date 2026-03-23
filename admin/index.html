@@ -167,6 +167,13 @@
         </div>
 
     </div>
+    <div class="color-picker-item">
+    <input type="color" id="s-color-bg" value="#FEFCE8" class="big-color-input">
+    <div class="color-picker-label">
+        <strong>ব্যাকগ্রাউন্ড রঙ</strong>
+        <small>পুরো সাইটের পেছনের রঙ</small>
+    </div>
+</div>
     <button class="btn-reset-colors" onclick="resetColors()">↺ ডিফল্ট রঙে ফিরে যান</button>
 </div>
 
@@ -175,20 +182,20 @@
                     <h3>✏️ সাইটের টেক্সট পরিবর্তন</h3>
                     <div class="text-fields-grid">
                         <div class="form-group">
-                            <label>Hero Badge</label>
-                            <input type="text" id="s-hero-badge" placeholder="📚 শিক্ষার্থীদের সেরা সঙ্গী">
-                        </div>
-                        <div class="form-group">
                             <label>সাইটের নাম (Title)</label>
                             <input type="text" id="s-title-main" placeholder="don't change it">
                         </div>
                         <div class="form-group">
+                            <label>Hero Badge</label>
+                            <input type="text" id="s-hero-badge" placeholder="📚 Your Effort Our Support">
+                        </div>
+                        <div class="form-group">
                             <label>Tagline</label>
-                            <input type="text" id="s-tagline" placeholder="Your effort, our support">
+                            <input type="text" id="s-tagline" placeholder="Extra space to write something">
                         </div>
                         <div class="form-group">
                             <label>Hero বিবরণ</label>
-                            <input type="text" id="s-hero-desc" placeholder="A dictionary of your textbook">
+                            <input type="text" id="s-hero-desc" placeholder="A Board Book Dictionary for Class 1-12 Students">
                         </div>
                         <div class="form-group">
                             <label>লেখকের ছবি</label>
@@ -316,6 +323,11 @@
                     </label>
                     <input type="number" id="book-order" placeholder="1">
                 </div>
+                <div class="form-group full">
+    <label>বিস্তারিত (বিস্তারিত বাটনে দেখাবে)</label>
+    <textarea id="book-details" rows="5"
+        placeholder="৭-৮ লাইনের বিস্তারিত বর্ণনা লিখুন। গ্রাহক বিস্তারিত বাটনে ক্লিক করলে এই লেখা দেখবে।"></textarea>
+</div>
 
                 <div class="form-group full">
                     <div class="desc-label-row">

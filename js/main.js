@@ -46,6 +46,10 @@ function applySettings(s) {
     if (s.colorSecondaryDark) root.style.setProperty('--color-secondary-dark', s.colorSecondaryDark);
     if (s.colorAccent)        root.style.setProperty('--color-accent',         s.colorAccent);
     if (s.colorAccentDark)    root.style.setProperty('--color-accent-dark',    s.colorAccentDark);
+    if (s.colorBg) {
+    root.style.setProperty('--color-bg', s.colorBg);
+    document.body.style.backgroundColor = s.colorBg;
+}
 
     // All editable text fields — key in Firebase matches data-editable attribute
     const textFields = [
@@ -175,18 +179,23 @@ function createBookCard(book, index) {
                 ${book.weight ? `<span class="book-weight">${book.weight}g</span>` : ''}
             </div>
             <div class="book-actions">
-                ${pdfUrl
-                    ? `<button class="btn-preview" onclick="openPreview('${pdfUrl}')">👁 একটু পড়ে দেখুন</button>`
-                    : `<button class="btn-preview" disabled style="opacity:0.4;cursor:default">📄 শীঘ্রই আসছে</button>`
-                }
-                ${book.stock === 'out_of_stock'
-                    ? `<button class="btn-add-cart out-of-stock" disabled>❌ স্টক শেষ</button>`
-                    : book.stock === 'coming_soon'
-                    ? `<button class="btn-add-cart out-of-stock" disabled>🔜 শীঘ্রই আসছে</button>`
-                    : `<button class="btn-add-cart ${inCart ? 'added' : ''}" id="cart-btn-${book.id}">
-                        ${inCart ? '✓ কার্টে আছে' : '🛒 কার্টে যোগ করুন'}
-                       </button>`
-                }
+    ${pdfUrl
+        ? `<button class="btn-preview btn-small" onclick="openPreview('${pdfUrl}')">👁 একটু পড়ে দেখুন</button>`
+        : `<button class="btn-preview btn-small" disabled style="opacity:0.4;cursor:default">📄 শীঘ্রই আসছে</button>`
+    }
+    ${book.details
+        ? `<button class="btn-details btn-small" onclick="openDetails('${book.id}')">📖 বিস্তারিত</button>`
+        : ''
+    }
+    ${book.stock === 'out_of_stock'
+        ? `<button class="btn-add-cart out-of-stock" disabled>❌ স্টক শেষ</button>`
+        : book.stock === 'coming_soon'
+        ? `<button class="btn-add-cart out-of-stock" disabled>🔜 শীঘ্রই আসছে</button>`
+        : `<button class="btn-add-cart ${inCart ? 'added' : ''}" id="cart-btn-${book.id}">
+            ${inCart ? '✓ কার্টে আছে' : '🛒 কার্টে যোগ করুন'}
+           </button>`
+    }
+</div>
             </div>
         </div>`;
 
@@ -462,3 +471,19 @@ document.addEventListener('click', e => {
         e.target.classList.remove('open');
     }
 });
+
+// ══════════════════════════════════════════
+// DETAILS MODAL
+// ══════════════════════════════════════════
+window.openDetails = function(bookId) {
+    const book = window._allBooks.find(b => b.id === bookId);
+    if (!book) return;
+    document.getElementById('details-title').textContent = book.title || 'Golden Student Voc@bulary';
+    document.getElementById('details-class').textContent = book.classLabel || '';
+    document.getElementById('details-text').textContent  = book.details || '';
+    document.getElementById('details-modal').classList.add('open');
+};
+
+window.closeDetails = function() {
+    document.getElementById('details-modal').classList.remove('open');
+};

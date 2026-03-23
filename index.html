@@ -47,13 +47,13 @@
         </div>
         <div class="container">
             <div class="hero-content">
-                <div class="hero-badge" data-editable="hero-badge">📚 শিক্ষার্থীদের সেরা সঙ্গী</div>
                 <h1 class="main-title">
                     <span class="title-golden" data-editable="title-main">Golden</span>
                     <span class="title-sub" data-editable="title-sub">Student Voc@bulary</span>
                 </h1>
-                <p class="tagline" data-editable="tagline">Your effort, our support</p>
-                <p class="hero-desc" data-editable="hero-desc">A dictionary of your textbook — শেখার পথের সঙ্গী</p>
+                <div class="hero-badge" data-editable="hero-badge">📚 Your effort, our support</div>
+                <p class="tagline" data-editable="tagline"></p>
+                <p class="hero-desc" data-editable="hero-desc">A Board Book Dictionary</p>
                 <div class="hero-actions">
                     <a href="#books" class="btn btn-hero-primary">বই দেখুন</a>
                     <a href="#about" class="btn btn-hero-outline">আমাদের সম্পর্কে</a>
@@ -124,7 +124,7 @@
                         <div class="author-avatar" id="author-avatar">✍️</div>
                         <div class="author-info">
                             <h3 class="author-name" data-editable="author-name">Enamuzzaman Adil</h3>
-                            <p class="author-creds" data-editable="author-creds">BBA(Accounting), MBA(Accounting)<br>University of Dhaka</p>
+                            <p class="author-creds" data-editable="author-creds">BBA, MBA<br>University of Dhaka</p>
                             <span class="author-exp" data-editable="author-exp">১২ বছরের শিক্ষকতার অভিজ্ঞতা</span>
                         </div>
                     </div>
@@ -269,6 +269,15 @@
                 </button>
                 <p class="order-note">অর্ডার পাঠানোর পর আমরা আপনাকে কনফার্ম করব।</p>
             </div>
+        </div>
+    </div>
+     <!-- ═══ DETAILS MODAL ═══ -->
+    <div class="modal-overlay" id="details-modal" onclick="if(event.target===this)closeDetails()">
+        <div class="details-modal-box">
+            <button class="details-close" onclick="closeDetails()">✕</button>
+            <h3 id="details-title"></h3>
+            <p class="details-class" id="details-class"></p>
+            <p class="details-text" id="details-text"></p>
         </div>
     </div>
 

@@ -83,7 +83,7 @@
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/YOURUSERNAME/golden-student-vocabulary.git
+git clone https://github.com/JimIITDU/golden-student-vocabulary.git
 cd golden-student-vocabulary
 ```
 

@@ -587,3 +587,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); min-
     outline: none;
     border-color: var(--pink);
 }
+
+.btn-reset-colors {
+    margin-top: 1rem;
+}

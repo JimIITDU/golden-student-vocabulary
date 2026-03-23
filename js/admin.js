@@ -285,7 +285,7 @@ window.openBookModal = function() {
     document.getElementById('book-modal-title').textContent = 'নতুন বই যোগ করুন';
     document.getElementById('edit-book-id').value = '';
     ['book-title', 'book-class-label', 'book-price',
-     'book-weight', 'book-order', 'book-desc', 'book-pdf-url', 'book-cover-url'].forEach(id => {
+ 'book-weight', 'book-order', 'book-desc', 'book-details', 'book-pdf-url', 'book-cover-url'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
     });
@@ -311,6 +311,7 @@ window.editBook = function(id) {
     document.getElementById('book-weight').value      = book.weight || '';
     document.getElementById('book-order').value       = book.order || '';
     document.getElementById('book-desc').value        = book.description || '';
+    document.getElementById('book-details').value     = book.details || '';
     document.getElementById('book-pdf-url').value     = book.pdfUrl || '';
     document.getElementById('book-stock').value       = book.stock || 'in_stock';
     document.getElementById('book-cover-url').value   = book.coverUrl || '';
@@ -375,6 +376,7 @@ window.saveBook = async function() {
             weight:      Number(document.getElementById('book-weight').value) || null,
             order:       Number(document.getElementById('book-order').value) || 99,
             description: document.getElementById('book-desc').value.trim(),
+            details:     document.getElementById('book-details').value.trim(),
             coverUrl:    coverUrl || '',
             pdfUrl:      pdfUrl || '',
             updatedAt:   serverTimestamp()
@@ -452,6 +454,7 @@ window.generateDescription = async function() {
         const text = data.text || '';``
         if (text) {
             document.getElementById('book-desc').value = text.trim();
+            
             showAdminToast('✨ AI লিখেছে!');
         } else {
             showAdminToast('AI থেকে কিছু পাওয়া যায়নি');
@@ -504,6 +507,7 @@ function populateSettingsForm(s) {
         'author-name':      's-author-name',
         'author-creds':      's-author-creds',
         'author-exp':        's-author-exp',
+        colorBg:             's-color-bg',
     };
 
     Object.entries(map).forEach(([key, id]) => {
@@ -532,6 +536,7 @@ window.resetColors = function() {
     document.getElementById('s-color-primary-dark').value = '#EC4899';
     document.getElementById('s-color-secondary').value    = '#22C55E';
     document.getElementById('s-color-accent').value       = '#EAB308';
+    document.getElementById('s-color-bg').value           = '#FEFCE8';
     showAdminToast('ডিফল্ট রঙ সেট হয়েছে — সেভ করুন');
 };
 
@@ -546,6 +551,7 @@ window.saveSettings = async function() {
         colorPrimaryDark:   document.getElementById('s-color-primary-dark').value,
         colorSecondaryDark: document.getElementById('s-color-secondary').value,
         colorAccentDark:    document.getElementById('s-color-accent').value,
+        colorBg:            document.getElementById('s-color-bg').value,
         'hero-badge':       document.getElementById('s-hero-badge').value.trim(),
         'title-main':       document.getElementById('s-title-main').value.trim(),
         tagline:            document.getElementById('s-tagline').value.trim(),
@@ -600,3 +606,4 @@ document.querySelectorAll('.modal-backdrop').forEach(b => {
         if (e.target === b) b.classList.remove('open');
     });
 });
+
